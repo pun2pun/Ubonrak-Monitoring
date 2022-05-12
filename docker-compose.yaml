@@ -1,0 +1,29 @@
+version: '3.3'
+services:  
+  db:
+    container_name: pg_container
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: UbonRak User
+      POSTGRES_PASSWORD: ubonrak_ubu
+      POSTGRES_DB: "UbonRak-UBU-Data-center"
+    ports:
+      - "5432:5432"
+    volumes:
+      - local_pgdata:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ubu_admin@ubu.ac.th
+      PGADMIN_DEFAULT_PASSWORD: ubu2565
+    ports:
+      - "3005:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+volumes:
+  local_pgdata:
+  pgadmin-data:
