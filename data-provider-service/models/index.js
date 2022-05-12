@@ -21,6 +21,7 @@ if (config.use_env_variable) {
 }
 
 db.User = require("./user")(sequelize, Sequelize.DataTypes);
+db.Electrical = require("./electrical")(sequelize, Sequelize.DataTypes);
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {

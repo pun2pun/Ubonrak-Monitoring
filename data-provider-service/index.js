@@ -48,6 +48,27 @@ app.post("/user", async (req, res) => {
   }
 });
 
+app.post("/electrical", async (req, res) => {
+  console.log(req.body);
+  try {
+    const electrical_data = req.body;
+    await db.Electrical.createElacticDataRow(electrical_data);
+    res.status(200).json({ message: "Add data in row Successfully" });
+  } catch (error) {
+    res.status(400);
+  }
+});
+
+app.get("/electrical", async (req, res) => {
+  const option = req.query;
+  const { count, rows } = await db.Electrical.getLastdataHistory(option);
+  console.log(count);
+  res.status(200).json({
+    count: count,
+    data: rows,
+  });
+});
+
 app.listen(3001, () => {
   console.log("Application is running on port 80");
 });
