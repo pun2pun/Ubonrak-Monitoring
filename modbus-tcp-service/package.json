@@ -1,0 +1,17 @@
+{
+  "name": "modbus-tcp-service",
+  "version": "1.0.0",
+  "description": "For read data from PLC by tcp protocal",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "modbus-tcp"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "modbus-tcp": "^0.4.13"
+  }
+}
