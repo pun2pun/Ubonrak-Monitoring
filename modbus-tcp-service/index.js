@@ -1,23 +1,30 @@
-const modbus = require("modbus-tcp");
+const Modbus = require("jsmodbus");
+const net = require("net");
+const netServer = new net.Server();
+const socket = new net.Socket();
 
-const client = new modbus.Client();
-const server = new modbus.Server();
+const options = {
+  host: "127.0.0.1",
+  port: "502",
+};
+const client = new Modbus.client.TCP(socket);
 
-// server.master_url = "172.0.0.1";
-
-client.writer().pipe(server.reader());
-
-// console.log(server.reader());
-
-// client.writer().pipe(master_url);
-
-server.writer().pipe(client.reader());
-
-server.on("read-coils", (from, to, replay) => {
-  console.log(from, to);
-  return replay(null, [1, 0, 1, 0]);
+socket.on("connect", function () {
+  client
+    .readHoldingRegisters(0, 2)
+    .then(function (resp) {
+      console.log(resp.response._body.valuesAsArray);
+      socket.end();
+    })
+    .catch(function () {
+      console.error(
+        require("util").inspect(arguments, {
+          depth: null,
+        })
+      );
+      socket.end();
+    });
 });
 
-client.readCoils(0, 10, 11, (err, coils) => {
-  console.log(coils);
-});
+socket.on("error", console.error);
+socket.connect(options);
